@@ -1,4 +1,16 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /home-surf
+  ssl:
+    enabled: true
+    key-store: ./src/main/resources/homesurf.p12
+    key-store-type: PKCS12
+    key-store-password: password
+    key-alias: homesurf
 spring:
+  profiles:
+    active: default
   application:
     name: Home Surf
   datasource:
