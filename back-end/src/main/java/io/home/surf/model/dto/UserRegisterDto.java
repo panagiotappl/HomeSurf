@@ -1,9 +1,16 @@
 package io.home.surf.model.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author Dimitris Anastasopoulos
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRegisterDto {
 
   private String username;
@@ -17,6 +24,9 @@ public class UserRegisterDto {
   private String surname;
 
   private String mobile;
+  
+  @JsonProperty("roles")
+  private List<CreateUserRoleRelDto> userRoles = new ArrayList<>();
 
   public UserRegisterDto() {
   }
@@ -67,6 +77,14 @@ public class UserRegisterDto {
 
   public void setMobile(String mobile) {
     this.mobile = mobile;
+  }
+
+  public List<CreateUserRoleRelDto> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(List<CreateUserRoleRelDto> userRoles) {
+    this.userRoles = userRoles;
   }
 
 }

@@ -25,7 +25,7 @@ import io.home.surf.service.UserService;
  *
  */
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
 
   @Autowired
@@ -34,7 +34,7 @@ public class UserController {
   @Autowired
   private ModelMapper modelMapper;
 
-  @GetMapping("user/{id}")
+  @GetMapping("/{id}")
   @ResponseBody
   public ResponseEntity<?> findById(@PathVariable UUID id) {
     Optional<UserAccount> userAccount = userService.findById(id);
@@ -46,19 +46,19 @@ public class UserController {
     }
   }
 
-  @GetMapping("user/username-exists/{username}")
+  @GetMapping("/username-exists/{username}")
   @ResponseBody
   public ResponseEntity<Boolean> usernameExists(@PathVariable String username) {
     return new ResponseEntity<>(userService.usernameExists(username), HttpStatus.OK);
   }
 
-  @GetMapping("user/email-exists/{email}")
+  @GetMapping("/email-exists/{email}")
   @ResponseBody
   public ResponseEntity<Boolean> emailExists(@PathVariable String email) {
     return new ResponseEntity<>(userService.emailExists(email), HttpStatus.OK);
   }
 
-  @PostMapping("/user")
+  @PostMapping
   @ResponseBody
   public ResponseEntity<UserLoginResponse> register(@RequestBody UserRegisterDto registerDto) {
     UserAccount userAccount = modelMapper.map(registerDto, UserAccount.class);

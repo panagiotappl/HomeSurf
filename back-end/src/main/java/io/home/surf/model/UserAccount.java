@@ -114,6 +114,11 @@ public class UserAccount {
     this.userRoles = userRoles;
   }
 
+  public void addRole(UserRole role) {
+    UserRoleRel relation = new UserRoleRel(this, role);
+    userRoles.add(relation);
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;

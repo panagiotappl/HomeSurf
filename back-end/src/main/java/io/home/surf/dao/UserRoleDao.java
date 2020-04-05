@@ -1,6 +1,8 @@
 package io.home.surf.dao;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import io.home.surf.model.UserRole;
 
@@ -8,6 +10,8 @@ import io.home.surf.model.UserRole;
  * @author Dimitris Anastasopoulos
  *
  */
-public interface UserRoleDao extends PagingAndSortingRepository<UserRole, Integer> {
+public interface UserRoleDao extends JpaRepository<UserRole, Integer> {
+  
+  Optional<UserRole> findById(int id);
 
 }

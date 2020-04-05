@@ -29,6 +29,11 @@ public class UserRoleRel {
   public UserRoleRel() {
   }
 
+  public UserRoleRel(UserAccount userAccount, UserRole userRole) {
+    this.userAccount = userAccount;
+    this.userRole = userRole;
+  }
+
   public UserAccount getUserAccount() {
     return userAccount;
   }

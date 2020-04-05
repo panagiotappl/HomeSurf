@@ -44,6 +44,11 @@ public class UserRole {
   }
 
   @Override
+  public String toString() {
+    return "UserRole [id=" + id + ", type=" + type + "]";
+  }
+
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
