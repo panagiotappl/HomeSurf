@@ -1,11 +1,16 @@
 package io.home.surf.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,28 +20,32 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 public class UserAccount {
-  
+
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private UUID id;
-  
+
   @Column(nullable = false, unique = true)
   private String username;
-  
+
   @Column(nullable = false, unique = false)
   private String password;
-  
+
   @Column(nullable = false, unique = true)
   private String email;
-  
+
   @Column(nullable = false, unique = false)
   private String name;
-  
+
   @Column(nullable = false, unique = false)
   private String surname;
-  
+
   private String mobile;
+
+  @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true,
+      fetch = FetchType.EAGER)
+  private Set<UserRoleRel> userRoles = new HashSet<>();
 
   public UserAccount() {
   }
@@ -95,6 +104,14 @@ public class UserAccount {
 
   public void setMobile(String mobile) {
     this.mobile = mobile;
+  }
+
+  public Set<UserRoleRel> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(Set<UserRoleRel> userRoles) {
+    this.userRoles = userRoles;
   }
 
   @Override
