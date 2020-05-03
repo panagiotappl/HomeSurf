@@ -30,26 +30,34 @@ public class Listing {
   private double extraCostPerGuest;
 
   // general info
+  @Column(nullable = false, unique = false)
   private int numberOfBathrooms;
 
+  @Column(nullable = false, unique = false)
   private int numberOfBeds;
 
+  @Column(nullable = false, unique = false)
   private int numberOfBedrooms;
 
   /**
    * floor area in m2
    */
+  @Column(nullable = false, unique = false)
   private double floorArea;
 
+  @Column(nullable = false, unique = false)
   private String type;
-  
-//  rules
+
+  // rules
+  @Column(nullable = false, unique = false)
   private boolean smokingAllowed;
-  
+
+  @Column(nullable = false, unique = false)
   private boolean petsAllowed;
-  
+
+  @Column(nullable = false, unique = false)
   private boolean eventsAllowed;
-  
+
   @Column(nullable = false, unique = false)
   private int maxNumberOfGuests;
 
@@ -61,10 +69,13 @@ public class Listing {
   private ListingLocationInfo locationInfoId;
 
   // utilities
+  @Column(nullable = false, unique = false)
   private boolean hasInternet;
 
+  @Column(nullable = false, unique = false)
   private boolean hasTv;
 
+  @Column(nullable = false, unique = false)
   private boolean hasAirCondition;
 
   @ManyToOne(optional = false)
