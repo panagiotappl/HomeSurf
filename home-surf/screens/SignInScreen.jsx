@@ -8,10 +8,8 @@ export default function SignIn({ navigation }) {
   return (
     <View>
       <Text>Sign in</Text>
-      <Text>- or create your account -</Text>
+      <Text>- or create an account -</Text>
       <Button
-        type="clear"
-        titleStyle={globalStyles['button-title']}
         title="Register"
         onPress={() => navigation.navigate('Registration')}
       />
