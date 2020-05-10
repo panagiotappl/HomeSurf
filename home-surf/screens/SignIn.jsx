@@ -3,17 +3,17 @@ import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import globalStyles from '../global.scss';
-import styles from './Home.module.scss';
 
-export default function Home({ navigation }) {
+export default function SignIn({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>HomeSurf</Text>
+    <View>
+      <Text>Sign in</Text>
+      <Text>- or create your account -</Text>
       <Button
         type="clear"
         titleStyle={globalStyles['button-title']}
-        title="Sign in"
-        onPress={() => navigation.navigate('SignIn')}
+        title="Register"
+        onPress={() => navigation.navigate('Registration')}
       />
     </View>
   );
