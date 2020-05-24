@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.home.surf.exception.HomeSurfApiException;
 import io.home.surf.model.UserAccount;
 import io.home.surf.model.dto.UserLoginDto;
 import io.home.surf.model.dto.UserLoginResponse;
@@ -61,11 +62,15 @@ public class UserController {
 
   @PostMapping
   @ResponseBody
-  public ResponseEntity<UserLoginResponse> register(@RequestBody UserRegisterDto registerDto) {
-    UserAccount userAccount = modelMapper.map(registerDto, UserAccount.class);
-    userAccount = userService.save(userAccount);
-    UserLoginResponse response = modelMapper.map(userAccount, UserLoginResponse.class);
-    return new ResponseEntity<>(response, HttpStatus.OK);
+  public ResponseEntity<?> register(@RequestBody UserRegisterDto registerDto) {
+    try {
+      UserAccount userAccount = modelMapper.map(registerDto, UserAccount.class);
+      userAccount = userService.save(userAccount);
+      UserLoginResponse response = modelMapper.map(userAccount, UserLoginResponse.class);
+      return new ResponseEntity<>(response, HttpStatus.OK);
+    } catch (HomeSurfApiException e) {
+      return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+    }
   }
 
   @GetMapping("/login")

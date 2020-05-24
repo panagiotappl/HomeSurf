@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import io.home.surf.utils.PasswordConverter;
 
 /**
  * @author Dimitris Anastasopoulos
@@ -30,6 +33,7 @@ public class UserAccount {
   private String username;
 
   @Column(nullable = false, unique = false)
+  @Convert(converter = PasswordConverter.class)
   private String password;
 
   @Column(nullable = false, unique = true)

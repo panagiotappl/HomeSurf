@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.home.surf.dao.UserAccountDao;
 import io.home.surf.dao.UserRoleDao;
+import io.home.surf.exception.HomeSurfApiException;
 import io.home.surf.model.UserAccount;
 import io.home.surf.model.UserRole;
 import io.home.surf.model.UserRoleRel;
@@ -42,7 +43,11 @@ public class UserService {
   }
 
   @Transactional
-  public UserAccount save(UserAccount userToBeSaved) {
+  public UserAccount save(UserAccount userToBeSaved) throws HomeSurfApiException {
+    if (usernameExists(userToBeSaved.getUsername()))
+      throw HomeSurfApiException.conflict("Username not available");
+    if (emailExists(userToBeSaved.getEmail()))
+      throw HomeSurfApiException.conflict("Email not available");
     Set<UserRoleRel> relations = new HashSet<>();
     relations.addAll(userToBeSaved.getUserRoles());
     userToBeSaved.getUserRoles().clear();
@@ -55,7 +60,7 @@ public class UserService {
     }
     return savedUserAccount;
   }
-  
+
   public Optional<UserAccount> logIn(String emailOrUsername, String password) {
     return userAccountDao.findByEmailOrUsernameAndPassword(emailOrUsername, password);
   }
