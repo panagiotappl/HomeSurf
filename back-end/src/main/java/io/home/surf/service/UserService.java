@@ -55,5 +55,9 @@ public class UserService {
     }
     return savedUserAccount;
   }
+  
+  public Optional<UserAccount> logIn(String emailOrUsername, String password) {
+    return userAccountDao.findByEmailOrUsernameAndPassword(emailOrUsername, password);
+  }
 
 }

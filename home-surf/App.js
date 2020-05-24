@@ -1,33 +1,57 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign } from '@expo/vector-icons';
 
-import Home from './screens/Home';
-import Registration from './screens/Registration';
-import SignIn from './screens/SignIn';
+import HomeScreen from './screens/HomeScreen';
+import SignInScreen from './screens/SignInScreen';
+import RegistrationScreen from './screens/RegistrationScreen';
 
-const Stack = createStackNavigator();
+import Colors from './colors.js';
 
+const SignInStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function SignInStackScreen() {
+  return (
+    <SignInStack.Navigator>
+      <SignInStack.Screen name="Sign In" component={SignInScreen} />
+      <SignInStack.Screen name="Registration" component={RegistrationScreen} />
+    </SignInStack.Navigator>
+  );
+}
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: 'HomeSurf' }}
-        />
-        <Stack.Screen
-          name="Registration"
-          component={Registration}
-          options={{ title: 'Create an account' }}
-        />
-        <Stack.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{ title: 'Sign in' }}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Search') {
+              iconName = 'search1';
+            } else if (route.name === 'Sign In') {
+              iconName = 'user';
+            } else if (route.name === 'My bookings') {
+              iconName = 'calendar';
+            } else if (route.name === 'Inbox') {
+              iconName = 'mail';
+            }
+
+            return <AntDesign name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: Colors.darkTeal,
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Search" component={HomeScreen} />
+        <Tab.Screen name="My bookings" component={HomeScreen} />
+        <Tab.Screen name="Sign In" component={SignInStackScreen} />
+        <Tab.Screen name="Inbox" component={HomeScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
