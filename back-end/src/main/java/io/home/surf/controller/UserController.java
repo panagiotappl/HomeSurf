@@ -55,4 +55,5 @@ public class UserController {
     return new ResponseEntity<>(userService.emailExists(email), HttpStatus.OK);
   }
 
+
 }
