@@ -13,6 +13,8 @@ public class UserLoginResponse {
 
   private String username;
 
+  private String token;
+
   private List<UserRoleResponse> roles;
 
   public UserLoginResponse() {
@@ -32,6 +34,14 @@ public class UserLoginResponse {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
   }
 
   public List<UserRoleResponse> getRoles() {

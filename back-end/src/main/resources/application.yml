@@ -25,3 +25,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
 #          auto: update
+securitysettings:
+  secret: $2a$10$7j8YNPaTIVXCvOxwjwqDFuh5pi0AV6wFO8NJV9gU1JicJ70jP4pLO
+  token-life-time-hours: 10

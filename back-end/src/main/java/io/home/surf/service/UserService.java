@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,9 @@ public class UserService {
   @Autowired
   private UserRoleDao userRoleDao;
 
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
+
   public Optional<UserAccount> findById(UUID id) {
     return userAccountDao.findById(id);
   }
@@ -51,6 +55,7 @@ public class UserService {
     Set<UserRoleRel> relations = new HashSet<>();
     relations.addAll(userToBeSaved.getUserRoles());
     userToBeSaved.getUserRoles().clear();
+    userToBeSaved.setPassword(passwordEncoder.encode(userToBeSaved.getPassword()));
     UserAccount savedUserAccount = userAccountDao.save(userToBeSaved);
     for (UserRoleRel relation : relations) {
       Optional<UserRole> role = userRoleDao.findById(relation.getUserRole().getId());
@@ -61,8 +66,8 @@ public class UserService {
     return savedUserAccount;
   }
 
-  public Optional<UserAccount> logIn(String emailOrUsername, String password) {
-    return userAccountDao.findByEmailOrUsernameAndPassword(emailOrUsername, password);
+  public Optional<UserAccount> logIn(String emailOrUsername) {
+    return userAccountDao.findByEmailOrUsername(emailOrUsername);
   }
 
 }

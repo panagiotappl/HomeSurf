@@ -9,17 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.home.surf.exception.HomeSurfApiException;
 import io.home.surf.model.UserAccount;
-import io.home.surf.model.dto.UserLoginDto;
 import io.home.surf.model.dto.UserLoginResponse;
-import io.home.surf.model.dto.UserRegisterDto;
 import io.home.surf.service.UserService;
 
 /**
@@ -58,32 +53,6 @@ public class UserController {
   @ResponseBody
   public ResponseEntity<Boolean> emailExists(@PathVariable String email) {
     return new ResponseEntity<>(userService.emailExists(email), HttpStatus.OK);
-  }
-
-  @PostMapping
-  @ResponseBody
-  public ResponseEntity<?> register(@RequestBody UserRegisterDto registerDto) {
-    try {
-      UserAccount userAccount = modelMapper.map(registerDto, UserAccount.class);
-      userAccount = userService.save(userAccount);
-      UserLoginResponse response = modelMapper.map(userAccount, UserLoginResponse.class);
-      return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (HomeSurfApiException e) {
-      return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-    }
-  }
-
-  @GetMapping("/login")
-  @ResponseBody
-  public ResponseEntity<?> logIn(@RequestBody UserLoginDto loginDto) {
-    Optional<UserAccount> userAccount = userService.logIn(loginDto.getEmailOrUsername(),
-        loginDto.getPassword());
-    if (userAccount.isPresent()) {
-      UserLoginResponse response = modelMapper.map(userAccount.get(), UserLoginResponse.class);
-      return new ResponseEntity<>(response, HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("Wrong username/email or password", HttpStatus.NOT_FOUND);
-    }
   }
 
 }
