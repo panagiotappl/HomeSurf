@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { getUsername } from '../selectors';
 
 export default function ProfileScreen({ navigation }) {
